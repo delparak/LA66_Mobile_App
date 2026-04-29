@@ -105,11 +105,11 @@ public class USBConnectionManager {
 //            // Set line encoding.
             mDeviceConnection.controlTransfer(0x21, 0x20, 0, 0, getLineEncoding(9600), 7, 0);
             if (mDeviceConnection.claimInterface(mInterface, true)) {
-                //初始化成功，可用了
+                //Initialization succeeded; ready to use
                 mOnUSBInitListener.success();
 
             } else {
-                //无通信权限
+                //No communication permission
                 mDeviceConnection.close();
                 mOnUSBInitListener.error(OnUSBInitListener.OPEN_DEVICE_FAILURE);
             }
@@ -166,7 +166,7 @@ public class USBConnectionManager {
 
     private void readFromUsb() {
 
-        //读取数据2
+        //Read data 2
 
         int outMax = usbEpOut.getMaxPacketSize();
 

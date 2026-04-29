@@ -94,7 +94,7 @@
     <string name="at11">设置发射功率</string>
     <string name="at12">打印所有AT指令</string>
     <string name="input_at">Please enter at command</string>
-<!--    <string name="input_at">请输入AT指令</string>-->
+<!--    <string name="input_at">Please enter an AT command</string>-->
 
     <string name="txt_password">请输入密码</string>
     <string name="placePassword">请输入密码</string>

@@ -178,14 +178,14 @@ public class BleActiity extends FragmentActivity {
             return;
         }
 //        if (!device.getName().equalsIgnoreCase("BT24-M")) {
-//            Toast.makeText(BleActiity.this, "暂不支持连接该设备", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(BleActiity.this, "Connecting to this device is not supported yet", Toast.LENGTH_SHORT).show();
 //            return;
 //        }
         if (mybleDevice == null | !isConnect) {
             MessageEvent<BleDevice> messageEvent1 = new MessageEvent<>();
             messageEvent1.setId(EventBusId.onLink);
             EventBus.getDefault().post(messageEvent1);
-//            new XPopup.Builder(BleActiity.this).asConfirm("发现设备", "是否连接该设备", new OnConfirmListener() {
+//            new XPopup.Builder(BleActiity.this).asConfirm("Device found", "Connect to this device?", new OnConfirmListener() {
 //                @Override
 //                public void onConfirm() {
 //                    mybleDevice = device;
@@ -371,7 +371,7 @@ public class BleActiity extends FragmentActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
         if (requestCode == AppSettingsDialog.DEFAULT_SETTINGS_REQ_CODE) {
-            //从设置页面返回，判断权限是否申请。
+            //Returned from settings; check whether permissions were granted.
             String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION};
             if (EasyPermissions.hasPermissions(this, perms)) {
 
@@ -385,11 +385,11 @@ public class BleActiity extends FragmentActivity {
     public void chechLocation() {
         String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
         if (EasyPermissions.hasPermissions(this, perms)) {
-            // 已获取权限
+            // Permission already granted
             // ...
 
         } else {
-            // 没有权限，现在去获取
+            // Permission is missing; request it now
             // ...
             EasyPermissions.requestPermissions(this, getResources().getText(R.string.applyBlue  ).toString(),
                     10001, perms);
@@ -419,7 +419,7 @@ public class BleActiity extends FragmentActivity {
                         break;
                     case R.id.msg_home2:
                         if (EasyPermissions.hasPermissions(BleActiity.this, perms)) {
-                            // 已获取权限
+                            // Permission already granted
                             // ...
 //                            if (!firstBollen) {
 //                                firstBollen = true;
@@ -434,7 +434,7 @@ public class BleActiity extends FragmentActivity {
                             viewPager.setCurrentItem(1);
                             return;
                         } else {
-                            // 没有权限，现在去获取
+                            // Permission is missing; request it now
                             // ...
                             EasyPermissions.requestPermissions(BleActiity.this, getResources().getText(R.string.applyBlue  ).toString(), 10001, perms);
                         }
@@ -443,7 +443,7 @@ public class BleActiity extends FragmentActivity {
                     case R.id.msg_home1:
                         Log.e("onCheckedChanged", "msg_home1");
                         if (EasyPermissions.hasPermissions(BleActiity.this, perms)) {
-                            // 已获取权限
+                            // Permission already granted
                             // ...
 //                            if (!firstBollen) {
 //                                firstBollen = true;
@@ -453,7 +453,7 @@ public class BleActiity extends FragmentActivity {
 //                            }
                             viewPager.setCurrentItem(2);
                         } else {
-                            // 没有权限，现在去获取
+                            // Permission is missing; request it now
                             // ...
                             EasyPermissions.requestPermissions(BleActiity.this, getResources().getText(R.string.applyBlue  ).toString(), 10001, perms);
                         }
@@ -461,11 +461,11 @@ public class BleActiity extends FragmentActivity {
                     case R.id.home_me:
                         Log.e("onCheckedChanged", "home_me");
                         if (EasyPermissions.hasPermissions(BleActiity.this, perms)) {
-                            // 已获取权限
+                            // Permission already granted
                             // ...
                             viewPager.setCurrentItem(3);
                         } else {
-                            // 没有权限，现在去获取
+                            // Permission is missing; request it now
                             // ...
                             EasyPermissions.requestPermissions(BleActiity.this, getResources().getText(R.string.applyBlue  ).toString(), 10001, perms);
                         }
@@ -544,7 +544,7 @@ public class BleActiity extends FragmentActivity {
                 messageEvent2.setName(mybleDevice.getName() != null ? mybleDevice.getName() : mybleDevice.getMac());
                 messageEvent2.setId(EventBusId.linkSuccess);
                 EventBus.getDefault().post(messageEvent2);
-//                txtble.setText("蓝牙连接成功");
+//                txtble.setText("Bluetooth connection succeeded");
                 MessageEvent<BleDevice> messageEvent1 = new MessageEvent<>();
                 messageEvent1.setId(EventBusId.upDataTime);
                 EventBus.getDefault().post(messageEvent1);
@@ -624,7 +624,7 @@ public class BleActiity extends FragmentActivity {
                     new BleNotifyCallback() {
                         @Override
                         public void onNotifySuccess() {
-                            // 打开通知操作成功
+                            // Enabling notifications succeeded
                             Log.e("setble66633", "onNotifySuccess2");
                             MessageEvent<BleDevice> messageEvent = new MessageEvent<>();
                             messageEvent.setBody(mybleDevice);
@@ -635,12 +635,12 @@ public class BleActiity extends FragmentActivity {
                         @Override
                         public void onNotifyFailure(BleException exception) {
                             Log.e("setble666633", "onNotifyFailure2");
-                            // 打开通知操作失败
+                            // Enabling notifications failed
                         }
 
                         @Override
                         public void onCharacteristicChanged(byte[] data) {
-                            // 打开通知后，设备发过来的数据将在这里出现
+                            // Incoming device data appears here after notifications are enabled
                             Log.e("setble666332", HexUtil.formatHexString(data, false));
 
                             Log.e("2upConfig",TextUtils.isStart(HexUtil.formatHexString(data, false))+"");
@@ -682,8 +682,8 @@ public class BleActiity extends FragmentActivity {
                             EventBus.getDefault().post(messageEvent);
 
 
-                            //数据解析
-//                            add("已接收" + HexUtil.formatHexString(data, true));
+                            //Parse incoming data
+//                            add("Received" + HexUtil.formatHexString(data, true));
                         }
                     });
 //        Boolean auto = PreferencesUtil.getBoolean(BleActiity.this, "auto", false);
@@ -738,14 +738,14 @@ public class BleActiity extends FragmentActivity {
 //                new BleWriteCallback() {
 //                                @Override
 //                    public void onWriteSuccess(int current, int total, byte[] justWrite) {
-//                        // 发送数据到设备成功（分包发送的情况下，可以通过方法中返回的参数可以查看发送进度）
+//                        // Data sent to the device successfully. For packetized sends, use the callback data to inspect progress.
 //                        Log.e("setblesend", HexUtil.formatHexString(justWrite, true));
 //                    }
 //
 //                    @Override
 //                    public void onWriteFailure(BleException exception) {
 //                        Log.e("setbleononReadFailure", "onWriteFailure");
-//                        // 发送数据到设备失败
+//                        // Failed to send data to the device
 //                    }
 //                });
         BleManager.getInstance().write(
@@ -756,14 +756,14 @@ public class BleActiity extends FragmentActivity {
                 new BleWriteCallback() {
                     @Override
                     public void onWriteSuccess(int current, int total, byte[] justWrite) {
-                        // 发送数据到设备成功（分包发送的情况下，可以通过方法中返回的参数可以查看发送进度）
+                        // Data sent to the device successfully. For packetized sends, use the callback data to inspect progress.
                         Log.e("setblesend", HexUtil.formatHexString(justWrite, true));
                     }
 
                     @Override
                     public void onWriteFailure(BleException exception) {
                         Log.e("setbleononReadFailure", "onWriteFailure");
-                        // 发送数据到设备失败
+                        // Failed to send data to the device
                     }
                 });
 

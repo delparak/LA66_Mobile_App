@@ -71,16 +71,16 @@ public class MallPagerAdapter extends PagerAdapter {
         }else {
             intent.setData(Uri.parse(url));
         }
-        // 注意此处的判断intent.resolveActivity()可以返回显示该Intent的Activity对应的组件名
-        // 官方解释 : Name of the component implementing an activity that can display the intent
+        // Note: intent.resolveActivity() can return the component name of an Activity able to handle this Intent
+        // Official description : Name of the component implementing an activity that can display the intent
         if (intent.resolveActivity(context.getPackageManager()) != null) {
             final ComponentName componentName = intent.resolveActivity(context.getPackageManager());
             Log.e("suyan = " , componentName.getClassName()+"");
             context.startActivity(Intent.createChooser(intent, "请选择浏览器"));
         } else {
             Toast.makeText(context,"链接错误或无浏览器",Toast.LENGTH_LONG).show();
-//            showText("链接错误或无浏览器");
-//            GlobalMethod.showToast(context, "链接错误或无浏览器");
+//            showText("Link error or no browser available");
+//            GlobalMethod.showToast(context, "Link error or no browser available");
         }
     }
     @Override

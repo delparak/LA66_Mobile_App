@@ -103,7 +103,7 @@ public class SearchActivity extends Activity {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //刷新需执行的操作
+                //Operation to perform on refresh
                 setble();
             }
         });
@@ -118,18 +118,18 @@ public class SearchActivity extends Activity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        // 将返回结果转给EasyPermissions
+        // Forward the result to EasyPermissions
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
     public void chechLocation() {
         String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION};
         if (EasyPermissions.hasPermissions(this, perms)) {
-            // 已获取权限
+            // Permission already granted
             // ...
 
         } else {
-            // 没有权限，现在去获取
+            // Permission is missing; request it now
             // ...
             EasyPermissions.requestPermissions(this, getResources().getText(R.string.applyBlue).toString(),
                     1001, perms);
@@ -182,7 +182,7 @@ public class SearchActivity extends Activity {
         Log.e("setble", "setble");
         BleScanRuleConfig scanRuleConfig = new BleScanRuleConfig.Builder()
 
-                .setScanTimeOut(10000)              // 扫描超时时间，可选，默认10秒
+                .setScanTimeOut(10000)              // Scan timeout; optional, defaults to 10 seconds
                 .build();
         BleManager.getInstance().initScanRule(scanRuleConfig);
 
@@ -235,14 +235,14 @@ public class SearchActivity extends Activity {
 //                    Log.e("setble99:", d.getMac());
 //                    if (d.getName() != null) {
 //                        Log.e("setble99Name:", d.getName());
-//                        mResultAdapter.addResult("发现蓝牙设备:" + d.getName());
+//                        mResultAdapter.addResult("Bluetooth device found:" + d.getName());
 //                        mResultAdapter.notifyDataSetChanged();
 //                        if (d.getName().equalsIgnoreCase("AC696X_1(BLE)")) {
-//                            txtble.setText("发现蓝牙设备");
+//                            txtble.setText("Bluetooth device found");
 //                            mybleDevice = d;
 //                        }
 //                    } else {
-//                        mResultAdapter.addResult("发现蓝牙设备:" + d.getMac());
+//                        mResultAdapter.addResult("Bluetooth device found:" + d.getMac());
 //                    }
 //                }
             }
@@ -305,7 +305,7 @@ public class SearchActivity extends Activity {
                 holder.bleDevice = characteristicList.get(position);
                 convertView.setTag(holder);
             }
-//            holder.txt_title.setText("数据:");
+//            holder.txt_title.setText("Data:");
             holder.bleDevice = characteristicList.get(position);
             if (characteristicList.get(position).getName() != null) {
                 holder.txt_title.setText(characteristicList.get(position).getName());
