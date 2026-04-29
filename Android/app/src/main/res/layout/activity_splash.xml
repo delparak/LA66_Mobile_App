@@ -17,4 +17,60 @@
         android:contentDescription="@string/open_legacy_ui"
         android:padding="12dp"
         android:src="@drawable/ic_hamburger_menu" />
+
+    <LinearLayout
+        android:id="@+id/shell_workspace"
+        android:layout_width="232dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="116dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/input_shell_id"
+            android:layout_width="match_parent"
+            android:layout_height="22dp"
+            android:background="@android:color/white"
+            android:hint="@string/shell_id_hint"
+            android:inputType="text"
+            android:paddingStart="4dp"
+            android:paddingEnd="4dp"
+            android:singleLine="true"
+            android:textColor="@android:color/black"
+            android:textColorHint="#A8A8A8"
+            android:textSize="18sp" />
+
+        <FrameLayout
+            android:id="@+id/panel_shell_send"
+            android:layout_width="match_parent"
+            android:layout_height="122dp"
+            android:layout_marginTop="4dp"
+            android:background="@android:color/white">
+
+            <TextView
+                android:id="@+id/btn_shell_send"
+                android:layout_width="wrap_content"
+                android:layout_height="24dp"
+                android:layout_gravity="end|bottom"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="6dp"
+                android:background="#D7FF2A"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:minWidth="42dp"
+                android:paddingStart="3dp"
+                android:paddingEnd="3dp"
+                android:text="@string/shell_send"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/panel_shell_output"
+            android:layout_width="match_parent"
+            android:layout_height="148dp"
+            android:layout_marginTop="29dp"
+            android:background="@android:color/white" />
+    </LinearLayout>
 </RelativeLayout>
