@@ -3,6 +3,11 @@
     <string name="open_legacy_ui">Open legacy UI</string>
     <string name="shell_id_hint">id</string>
     <string name="shell_send">send</string>
+    <string name="shell_message_hint">Type an ASCII message</string>
+    <string name="shell_output_hint">Received messages will appear here</string>
+    <string name="shell_error_empty">Please enter a message</string>
+    <string name="shell_error_ascii">Only English ASCII characters are allowed</string>
+    <string name="shell_error_max_bytes">Maximum payload is %1$d bytes</string>
     <string name="home">Home</string>
     <string name="Device_Info">Device Info</string>
     <string name="Config">Config</string>
