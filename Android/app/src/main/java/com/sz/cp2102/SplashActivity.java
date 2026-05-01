@@ -5,10 +5,18 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-public class SplashActivity  extends Activity {
+import java.nio.charset.StandardCharsets;
+
+public class SplashActivity extends Activity {
+
+    private static final int MAX_PAYLOAD_BYTES = 16;
+    private static final String SEND_PREFIX = "AT+SENDB=01,02,";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,6 +31,35 @@ public class SplashActivity  extends Activity {
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
 
+        final EditText inputShellMessage = findViewById(R.id.input_shell_message);
+        final TextView txtShellOutput = findViewById(R.id.txt_shell_output);
+
+        findViewById(R.id.btn_shell_send).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String input = inputShellMessage.getText().toString();
+                if (input.length() == 0) {
+                    showToast(getString(R.string.shell_error_empty));
+                    return;
+                }
+                if (!isPrintableAscii(input)) {
+                    showToast(getString(R.string.shell_error_ascii));
+                    return;
+                }
+
+                byte[] payloadBytes = input.getBytes(StandardCharsets.US_ASCII);
+                if (payloadBytes.length > MAX_PAYLOAD_BYTES) {
+                    showToast(getString(R.string.shell_error_max_bytes, MAX_PAYLOAD_BYTES));
+                    return;
+                }
+
+                String hexPayload = bytesToHex(payloadBytes);
+                String command = SEND_PREFIX + payloadBytes.length + "," + hexPayload;
+                appendOutput(txtShellOutput, "TX: " + command);
+                inputShellMessage.setText("");
+            }
+        });
+
         findViewById(R.id.btn_open_legacy_ui).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -30,6 +67,36 @@ public class SplashActivity  extends Activity {
                 startActivity(intent);
             }
         });
+    }
 
+    private void appendOutput(TextView outputView, String line) {
+        CharSequence current = outputView.getText();
+        if (current == null || current.length() == 0) {
+            outputView.setText(line);
+            return;
+        }
+        outputView.append("\n" + line);
+    }
+
+    private boolean isPrintableAscii(String value) {
+        for (int i = 0; i < value.length(); i++) {
+            char c = value.charAt(i);
+            if (c < 0x20 || c > 0x7E) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private String bytesToHex(byte[] bytes) {
+        StringBuilder builder = new StringBuilder(bytes.length * 2);
+        for (byte data : bytes) {
+            builder.append(String.format("%02X", data));
+        }
+        return builder.toString();
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 }
