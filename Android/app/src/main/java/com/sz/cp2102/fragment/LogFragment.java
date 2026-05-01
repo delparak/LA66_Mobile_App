@@ -74,7 +74,7 @@ public class LogFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //刷新需执行的操作
+                //Operation to perform on refresh
                 setdata();
             }
         });
@@ -186,7 +186,7 @@ public class LogFragment extends Fragment {
                 holder.btn_selete = (TextView) convertView.findViewById(R.id.btn_selete);
                 convertView.setTag(holder);
             }
-//            holder.txt_title.setText("数据:");
+//            holder.txt_title.setText("Data:");
             holder.txt_log.setText(logList.get(position).getName());
             holder.txt_log.setTag(logList.get(position).getPath());
             holder.txt_log.setOnClickListener(new View.OnClickListener() {
@@ -264,7 +264,7 @@ public class LogFragment extends Fragment {
     }
 
     /**
-     * oldPath 和 newPath必须是新旧文件的绝对路径
+     * oldPath and newPath must be absolute paths to the old and new files
      */
     private void renameFile(String oldPath, String newPath) {
         File oldFile = new File(oldPath);
@@ -281,15 +281,15 @@ public class LogFragment extends Fragment {
     }
 
     /**
-     * 删除文件，可以是文件或文件夹
+     * Delete a file or directory
      *
-     * @param delFile 要删除的文件夹或文件名
-     * @return 删除成功返回true，否则返回false
+     * @param delFile Directory or file name to delete
+     * @return Returns true if deletion succeeds; otherwise false
      */
     public boolean delete(String delFile) {
         File file = new File(delFile);
         if (!file.exists()) {
-//            Toast.makeText(HnUiUtils.getContext(), "删除文件失败:" + delFile + "不存在！", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(HnUiUtils.getContext(), "Failed to delete file:" + delFile + "does not exist!", Toast.LENGTH_SHORT).show();
             Log.e("删除文件失败:", delFile + "不存在！");
             return false;
         } else {
@@ -301,14 +301,14 @@ public class LogFragment extends Fragment {
     }
 
     /**
-     * 删除单个文件
+     * Delete a single file
      *
-     * @param filePath$Name 要删除的文件的文件名
-     * @return 单个文件删除成功返回true，否则返回false
+     * @param filePath$Name File name to delete
+     * @return Returns true if the single file is deleted; otherwise false
      */
     public static boolean deleteSingleFile(String filePath$Name) {
         File file = new File(filePath$Name);
-        // 如果文件路径所对应的文件存在，并且是一个文件，则直接删除
+        // If the path exists and points to a file, delete it directly
         if (file.exists() && file.isFile()) {
             if (file.delete()) {
                 Log.e("--Method--", "Copy_Delete.deleteSingleFile: 删除单个文件" + filePath$Name + "成功！");
@@ -325,32 +325,32 @@ public class LogFragment extends Fragment {
     }
 
     /**
-     * 删除目录及目录下的文件
+     * Delete a directory and all files under it
      *
-     * @param filePath 要删除的目录的文件路径
-     * @return 目录删除成功返回true，否则返回false
+     * @param filePath Path of the directory to delete
+     * @return Returns true if the directory is deleted; otherwise false
      */
     public static boolean deleteDirectory(String filePath) {
-        // 如果dir不以文件分隔符结尾，自动添加文件分隔符
+        // If dir does not end with the file separator, append it automatically
         if (!filePath.endsWith(File.separator))
             filePath = filePath + File.separator;
         File dirFile = new File(filePath);
-        // 如果dir对应的文件不存在，或者不是一个目录，则退出
+        // If dir does not exist or is not a directory, exit
         if ((!dirFile.exists()) || (!dirFile.isDirectory())) {
             Log.e("删除目录失败：", filePath + "不存在！");
             return false;
         }
         boolean flag = true;
-        // 删除文件夹中的所有文件包括子目录
+        // Delete all files in the directory, including subdirectories
         File[] files = dirFile.listFiles();
         for (File file : files) {
-            // 删除子文件
+            // Delete child file
             if (file.isFile()) {
                 flag = deleteSingleFile(file.getAbsolutePath());
                 if (!flag)
                     break;
             }
-            // 删除子目录
+            // Delete child directory
             else if (file.isDirectory()) {
                 flag = deleteDirectory(file
                         .getAbsolutePath());
@@ -362,7 +362,7 @@ public class LogFragment extends Fragment {
             Log.e("删除目录失败！", "544");
             return false;
         }
-        // 删除当前目录
+        // Delete the current directory
         if (dirFile.delete()) {
             Log.e("--Method--", "Copy_Delete.deleteDirectory: 删除目录" + filePath + "成功！");
             return true;
@@ -371,8 +371,8 @@ public class LogFragment extends Fragment {
             return false;
         }
     }
-    /**声明各种类型文件的dataType**/
-    private static final String DATA_TYPE_ALL = "*/*";//未指定明确的文件类型，不能使用精确类型的工具打开，需要用户选择
+    /**Declare dataType values for each file type**/
+    private static final String DATA_TYPE_ALL = "*/*";// No specific file type is declared; use a chooser instead of an exact-type handler
     private static final String DATA_TYPE_APK = "application/vnd.android.package-archive";
     private static final String DATA_TYPE_VIDEO = "video/*";
     private static final String DATA_TYPE_AUDIO = "audio/*";
@@ -385,20 +385,20 @@ public class LogFragment extends Fragment {
     private static final String DATA_TYPE_TXT = "text/plain";
     private static final String DATA_TYPE_PDF = "application/pdf";
     /**
-     * 获取对应文件的Uri
-     * @param intent 相应的Intent
-     * @param file 文件对象
+     * Get the URI for the given file
+     * @param intent Target Intent
+     * @param file File object
      * @return
      */
     private  Uri getUri(Intent intent, File file) {
         Uri uri = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            //判断版本是否在7.0以上
+            //Check whether the Android version is 7.0 or higher
             uri =
                     FileProvider.getUriForFile(getContext(),
                             getContext().getPackageName() + ".fileprovider",
                             file);
-            //添加这一句表示对目标应用临时授权该Uri所代表的文件
+            //Add this flag to grant the target app temporary access to the file represented by this URI
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         } else {
             uri = Uri.fromFile(file);
@@ -406,19 +406,19 @@ public class LogFragment extends Fragment {
         return uri;
     }
     /**
-     * 打开文件
-     * @param filePath 文件的全路径，包括到文件名
+     * Open a file
+     * @param filePath Full file path, including the file name
      */
     private   void openFile(String filePath) {
         File file = new File(filePath);
         if (!file.exists()){
-            //如果文件不存在
+            //If the file does not exist
             Toast.makeText(getContext(), "打开失败，原因：文件已经被移动或者删除", Toast.LENGTH_SHORT).show();
             return;
         }
-        /* 取得扩展名 */
+        /* Get the file extension */
         String end = file.getName().substring(file.getName().lastIndexOf(".") + 1, file.getName().length()).toLowerCase(Locale.getDefault());
-        /* 依扩展名的类型决定MimeType */
+        /* Determine the MIME type from the file extension */
         Intent intent = null;
         if (end.equals("m4a") || end.equals("mp3") || end.equals("mid") || end.equals("xmf") || end.equals("ogg") || end.equals("wav")) {
             intent =  generateVideoAudioIntent(filePath,DATA_TYPE_AUDIO);
@@ -447,9 +447,9 @@ public class LogFragment extends Fragment {
     }
 
     /**
-     * 产生除了视频、音频、网页文件外，打开其他类型文件的Intent
-     * @param filePath 文件路径
-     * @param dataType 文件类型
+     * Create an Intent for opening file types other than video, audio, and web pages
+     * @param filePath File path
+     * @param dataType File type
      * @return
      */
     private   Intent generateCommonIntent(String filePath, String dataType) {
@@ -463,9 +463,9 @@ public class LogFragment extends Fragment {
     }
 
     /**
-     * 产生打开视频或音频的Intent
-     * @param filePath 文件路径
-     * @param dataType 文件类型
+     * Create an Intent for opening video or audio files
+     * @param filePath File path
+     * @param dataType File type
      * @return
      */
     private  Intent generateVideoAudioIntent(String filePath, String dataType){
@@ -478,8 +478,8 @@ public class LogFragment extends Fragment {
         return intent;
     }
     /**
-     * 产生打开网页文件的Intent
-     * @param filePath 文件路径
+     * Create an Intent for opening web files
+     * @param filePath File path
      * @return
      */
     private  Intent generateHtmlFileIntent(String filePath) {

@@ -10,33 +10,33 @@ import com.sz.cp2102.BleActiity;
 import java.util.Locale;
 
 /**
- * 语言切换
+ * Language switching
  * Created by 41455 on 2016/10/13.
  */
 public class LanguageUtil {
     /**
-     * @param isEnglish true  ：点击英文，把中文设置未选中
-     *                  false ：点击中文，把英文设置未选中
+     * @param isEnglish true  ：when English is selected, mark Chinese as unselected
+     *                  false ：when Chinese is selected, mark English as unselected
      */
     public static void set(boolean isEnglish, Activity activity) {
         Configuration configuration = activity.getResources().getConfiguration();
         DisplayMetrics displayMetrics = activity.getResources().getDisplayMetrics();
         if (isEnglish) {
-            //设置英文
+            //Set English
             configuration.locale = Locale.ENGLISH;
         } else {
-            //设置中文
+            //Set Chinese
             configuration.locale = Locale.SIMPLIFIED_CHINESE;
         }
-        //更新配置
+        //Update configuration
         activity.getResources().updateConfiguration(configuration, displayMetrics);
 
-        //更新语言后，destroy当前页面，重新绘制
+        //After updating the language, destroy and redraw the current screen
 
         activity.finish();
 
         Intent it = new Intent(activity, BleActiity.class);
-        //清空任务栈确保当前打开activit为前台任务栈栈顶
+        //Clear the task stack so the currently opened Activity is at the top of the foreground task stack
         it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         activity.startActivity(it);
     }

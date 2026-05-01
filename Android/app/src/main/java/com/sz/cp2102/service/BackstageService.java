@@ -80,7 +80,7 @@ public class BackstageService extends Service implements SerialInputOutputManage
 //                while (true) {
 //
 //                    int length = MyApplication.driver.ReadData(buffer, 4096);
-//                    String recv = new String(buffer, 0, length);        //���ַ�����ʽ���
+//                    String recv = new String(buffer, 0, length);        // Parse the received data as a string
 //                    if(callback!=null)
 //                    callback.onDataChange(buffer,length);
 //                }

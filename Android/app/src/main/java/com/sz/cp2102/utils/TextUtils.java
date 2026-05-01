@@ -13,56 +13,56 @@ import java.util.List;
 
 public class TextUtils {
     /**
-     * 功能：取对应位置字节
+     * Function: read the byte at the corresponding position
      */
     public static String data(String hexString, int type) {
         switch (type) {
             case 1:
-                //起始位
+                //Start byte
                 return hexString.substring(0, 2);
             case 2:
-                //状态字
+                //Status byte
                 return hexString.substring(2, 4);
             case 3:
-                //电压
+                //Voltage
                 return hexString.substring(4, 8);
             case 4:
-                //电流
+                //Current
                 return hexString.substring(8, 12);
             case 5:
-                //转速
+                //RPM
                 return hexString.substring(12, 16);
             case 6:
-                //油量
+                //Fuel level
                 return hexString.substring(16, 18);
             case 7:
-                //保留1
+                //Reserved 1
                 return hexString.substring(18, 20);
             case 8:
-                //运行时间
+                //Runtime
                 return hexString.substring(20, 24);
             case 9:
-                //故障代码
+                //Fault code
                 return hexString.substring(24, 28);
             case 10:
-                //版本代码
+                //Version code
                 return hexString.substring(28, 30);
             case 11:
-                //校验码
+                //Checksum
                 return hexString.substring(30, 32);
         }
         return "";
     }
 
     /**
-     * 功能：字节转2进制字符串
+     * Function: convert a byte to a binary string
      */
     public static String hexStringTo2(String hexString) {
         return new BigInteger(hexString, 16).toString(2);
     }
 
     /**
-     * 功能：字节转十进制字符串
+     * Function: convert a byte to a decimal string
      */
     public static int hexStringTo10(String hexString) {
 
@@ -123,7 +123,7 @@ public class TextUtils {
     }
 
     /**
-     * 将字符串转成ASCII值
+     * Convert a string to ASCII values
      */
     public static String strToASCII(String data) {
         String requestStr = "";
@@ -136,12 +136,12 @@ public class TextUtils {
     }
 
     /**
-     * 将十进制整数转为十六进制数，并补位
+     * Convert a decimal integer to hex and left-pad it
      */
     public static String integerToHexString(int s) {
         String ss = Integer.toHexString(s);
         if (ss.length() % 2 != 0) {
-            ss = "0" + ss;//0F格式
+            ss = "0" + ss;// 0F format
         }
         return ss.toUpperCase();
     }
@@ -150,18 +150,18 @@ public class TextUtils {
     private static String hexString = "0123456789abcdef";
 
     /*
-     * 将16进制数字解码成字符串,适用于所有字符（包括中文）
+     * Decode a hex string into text; supports all characters, including Chinese
      */
     public static String decode(String bytes) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream(bytes.length() / 2);
-//将每2位16进制整数组装成一个字节
+//Convert every two hex digits into one byte
         for (int i = 0; i < bytes.length(); i += 2)
             baos.write((hexString.indexOf(bytes.charAt(i)) << 4 | hexString.indexOf(bytes.charAt(i + 1))));
         return new String(HexUtil.hexStringToBytes(bytes));
     }
 
     /**
-     * 功能：开始位
+     * Function: start byte
      */
     public static Boolean isStart(String hexString) {
         //
@@ -172,7 +172,7 @@ public class TextUtils {
     }
 
     /**
-     * 功能：结束位
+     * Function: end byte
      */
     public static Boolean isStop(String hexString) {
         //Start Tx events
@@ -182,7 +182,7 @@ public class TextUtils {
                 hexString.equals("0A0D5374617274205478206576656E74730D0A0D0A4F4B0D0A");
     }
     /**
-     * 功能：是否输入密码
+     * Function: password entered flag
      */
     public static Boolean passwordInput(String hexString ) {
         //Start Tx events
@@ -193,7 +193,7 @@ public class TextUtils {
     }
 
     /**
-     * 功能：输入密码正确
+     * Function: password is correct
      */
     public static Boolean passwordSuccess(String hexString ) {
         //Start Tx events
@@ -204,7 +204,7 @@ public class TextUtils {
     }
 
     /**
-     * 功能：输入密码错误
+     * Function: password is incorrect
      */
     public static Boolean passwordErr(String hexString ) {
         //Start Tx events
@@ -215,7 +215,7 @@ public class TextUtils {
     }
 
     /**
-     * 功能：已输入过密码
+     * Function: password has already been entered
      */
     public static Boolean passwordOnSuccess(String hexString ) {
         //Start Tx events
@@ -226,7 +226,7 @@ public class TextUtils {
     }
 
     /**
-     * 功能：取值
+     * Function: read value
      */
     public static String value(String hexString, String hex) {
         try {
@@ -249,7 +249,7 @@ public class TextUtils {
 
 
     /**
-     * 功能： 特殊取值
+     * Function: read special value
      */
     public static String value1(String hexString, String hex, int index) {
         try {
@@ -267,7 +267,7 @@ public class TextUtils {
 }
 
     /**
-     * 功能：
+     * Function:
      */
     public static String getINTMOD(String hexString) {
         try {
@@ -291,7 +291,7 @@ public class TextUtils {
     }
 
     /**
-     * 功能：返回图片
+     * Function: return image
      */
     public static Integer getImg(String hexString) {
         if (hexString.contains("LBT1")) {

@@ -133,7 +133,7 @@ public class MainActivity extends Activity implements SerialInputOutputManager.L
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        // 将权限的处理交给EasyPermissions
+        // Delegate permission handling to EasyPermissions
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
@@ -216,7 +216,7 @@ public class MainActivity extends Activity implements SerialInputOutputManager.L
 //        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
 //            @Override
 //            public void onRefresh() {
-//                //刷新需执行的操作
+//                //Operation to perform on refresh
 ////                setble();
 //            }
 //        });
@@ -308,7 +308,7 @@ public class MainActivity extends Activity implements SerialInputOutputManager.L
                                     btn_location.setText("Uplink Interval（" + locationTime + "s）");
                                     mLocationClient.stopLocation();
                                     mLocationOption.setInterval(locationTime * 1000);
-                                    //给定位客户端对象设置定位参数
+                                    //Apply location options to the location client
                                     mLocationClient.setLocationOption(mLocationOption);
                                     mLocationClient.startLocation();
                                 } catch (Exception e) {
@@ -377,7 +377,7 @@ public class MainActivity extends Activity implements SerialInputOutputManager.L
                     return;
                 }
                 if (sendDataList.size() == 0) {
-//                    showText("请在发包，待发包结束后自动发送");
+//                    showText("Please wait while packets are being sent; this command will be sent automatically after sending finishes");
                     Log.e("tyyy", send + "*" + send + "Please send it automatically after the contract is awarded");
                     sendtime = new Date().getTime();
                     sendDataList.add(send);
@@ -386,7 +386,7 @@ public class MainActivity extends Activity implements SerialInputOutputManager.L
                             showText("Please send it automatically after the contract is awarded");
                         });
                 } else {
-//                    showText("存在待发送指令，请稍后");
+//                    showText("A pending command already exists; please wait");
                     Log.e("tyyy", send + "*" + isSendData);
                     Log.e("tyyy", send + "*" + send + "There are instructions to be sent, please wait：" + isSendData);
                     if (send.indexOf("NJS") == -1)
@@ -601,7 +601,7 @@ public class MainActivity extends Activity implements SerialInputOutputManager.L
                             e.printStackTrace();
                         }
                     } else {
-                        //没有通讯权限
+                        //No communication permission
                         error();
                     }
                 }
@@ -854,9 +854,9 @@ public class MainActivity extends Activity implements SerialInputOutputManager.L
 
 
     private String TAG = "LAnActivity";
-    //声明AMapLocationClientOption对象
+    //Declare the AMapLocationClientOption instance
     public AMapLocationClientOption mLocationOption = null;
-    //声明AMapLocationClient类对象
+    //Declare the AMapLocationClient instance
     public AMapLocationClient mLocationClient = null;
     private double latitude;
     private double longitude;
@@ -865,14 +865,14 @@ public class MainActivity extends Activity implements SerialInputOutputManager.L
     private ArrayList<String> dataList = new ArrayList<>();
     private ArrayList<String> sendDataList = new ArrayList<>();
     private String rssiData = "";
-    //声明定位回调监听器
+    //Declare the location callback listener
     public AMapLocationListener mLocationListener = new AMapLocationListener() {
         @Override
         public void onLocationChanged(AMapLocation aMapLocation) {
             if (aMapLocation != null) {
                 if (aMapLocation.getErrorCode() == 0) {
-                    latitude = aMapLocation.getLatitude();//获取纬度
-                    longitude = aMapLocation.getLongitude();//获取经度
+                    latitude = aMapLocation.getLatitude();// Get latitude
+                    longitude = aMapLocation.getLongitude();// Get longitude
                     Log.e(TAG, "纬度：" + aMapLocation.getLatitude());
                     Log.e(TAG, "经度：" + aMapLocation.getLongitude());
 //                    mLocationClient.stopLocation();
@@ -893,9 +893,9 @@ public class MainActivity extends Activity implements SerialInputOutputManager.L
                         dataList.add(rssiData);
                         send("AT+SENDB=01,02," + data.length() / 2 + "," + data);
                     }
-                    //可在其中解析amapLocation获取相应内容。
+                    //Parse amapLocation here to read the required fields.
                 } else {
-                    //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                    //When location fails, use ErrCode to identify the cause and errInfo for details; see the error code table.
                     Log.e("AmapError", "location Error, ErrCode:"
                             + aMapLocation.getErrorCode() + ", errInfo:"
                             + aMapLocation.getErrorInfo());
@@ -905,33 +905,33 @@ public class MainActivity extends Activity implements SerialInputOutputManager.L
     };
 
     public void initMap() {
-        //初始化定位
+        //Initialize location
         mLocationClient = new AMapLocationClient(getApplicationContext());
-        //设置定位回调监听
+        //Set the location callback listener
         mLocationClient.setLocationListener(mLocationListener);
-        //初始化AMapLocationClientOption对象
+        //Initialize the AMapLocationClientOption instance
         mLocationOption = new AMapLocationClientOption();
         if (null != mLocationClient) {
             mLocationClient.setLocationOption(mLocationOption);
-            //设置场景模式后最好调用一次stop，再调用start以保证场景模式生效
+            //After setting the scenario mode, call stop once and then start to ensure it takes effect
             mLocationClient.stopLocation();
             mLocationClient.startLocation();
         }
-        //设置定位模式为AMapLocationMode.Hight_Accuracy，高精度模式。
+        //Set location mode to AMapLocationMode.Hight_Accuracy for high accuracy.
         mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Hight_Accuracy);
-//获取一次定位结果：
-//该方法默认为false。
+//Get a single location result:
+//This option defaults to false.
 //        mLocationOption.setOnceLocation(true);
-//        //设置定位间隔,单位毫秒,默认为2000ms，最低1000ms。
+//        //Set the location interval in ms. Default is 2000 ms; minimum is 1000 ms.
         mLocationOption.setInterval(locationTime * 1000);
-        //单位是毫秒，默认30000毫秒，建议超时时间不要低于8000毫秒。
+        //Unit is ms. Default is 30000 ms; recommended timeout is at least 8000 ms.
         mLocationOption.setHttpTimeOut(20000);
-        //关闭缓存机制
+        //Disable location caching
         mLocationOption.setLocationCacheEnable(false);
 
-        //给定位客户端对象设置定位参数
+        //Apply location options to the location client
         mLocationClient.setLocationOption(mLocationOption);
-        //启动定位
+        //Start location
         mLocationClient.startLocation();
 
     }
@@ -998,7 +998,7 @@ public class MainActivity extends Activity implements SerialInputOutputManager.L
                 holder.txt_log = (TextView) convertView.findViewById(R.id.txt_log);
                 convertView.setTag(holder);
             }
-//            holder.txt_title.setText("数据:");
+//            holder.txt_title.setText("Data:");
             if (seleteHex) {
                 holder.txt_log.setText(TextUtils.strToASCII(logList.get(position).getText()));
             } else {

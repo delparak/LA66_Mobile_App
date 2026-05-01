@@ -8,8 +8,8 @@ import java.util.List;
 
 public class IndexFragmentPageAdapter extends FragmentPagerAdapter {
 
-    private FragmentManager fragmetnmanager;  //创建FragmentManager
-    private List<Fragment> listfragment; //创建一个List<Fragment>
+    private FragmentManager fragmetnmanager;  // Create the FragmentManager
+    private List<Fragment> listfragment; // Create a List<Fragment>
 
     public IndexFragmentPageAdapter(FragmentManager fm, List<Fragment> list) {
         super(fm);

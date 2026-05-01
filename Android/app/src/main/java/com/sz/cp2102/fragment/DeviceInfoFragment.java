@@ -214,9 +214,9 @@ public class DeviceInfoFragment extends Fragment {
         }
         BleDevice device = event.getBody();
         if (device.getName() != null) {
-//            txt2.setText("已成功连接（" + device.getName() + ")");
+//            txt2.setText("Connected successfully (" + device.getName() + ")");
         } else {
-//            txt2.setText("已成功连接（" + device.getMac() + ")");
+//            txt2.setText("Connected successfully (" + device.getMac() + ")");
         }
         MessageEvent<String> messageEvent1 = new MessageEvent<>();
         messageEvent1.setId(EventBusId.send);
@@ -234,7 +234,7 @@ public class DeviceInfoFragment extends Fragment {
             return;
         }
 //        auto = false;
-//        txt2.setText("未连接");
+//        txt2.setText("Not connected");
         txt1.setText(R.string.text_noconnect);
         isLink = false;
         txt2.setText("Deveui");
@@ -389,7 +389,7 @@ public class DeviceInfoFragment extends Fragment {
                 holder. ln= (View) convertView.findViewById(R.id.ln);
                 convertView.setTag(holder);
             }
-//            holder.txt_title.setText("数据:");
+//            holder.txt_title.setText("Data:");
             holder.txt_log.setText(logList.get(position));
             holder. txt_log.setTag(logList.get(position));
             holder. txt_log.setOnClickListener(new View.OnClickListener() {

@@ -27,32 +27,32 @@ public class LogUtil {
     }
 
     /**
-     * 为避免产生大量垃圾日志文件，引入一个常量来决定是否需要打印日志
-     * @param msg 打印的日志消息
+     * Use a constant to decide whether to write logs and avoid creating many junk log files
+     * @param msg Log message to write
      */
     public static void writerlog(String msg) {
         if (LEV_W == 2) {
-            //保存到的文件路径
+            // Destination file path
             final String filePath = Environment.getExternalStorageDirectory().getAbsolutePath();
             FileWriter fw = null;
             BufferedWriter bw = null;
 
             try {
-                //创建文件夹
+                //Create directory
                 File dir = new File(filePath, "cp2102Log");
                 if (!dir.exists()) {
                     dir.mkdir();
                 }
                 long time = System.currentTimeMillis();
-                SimpleDateFormat sDateFormat =  new  SimpleDateFormat("yyyyMMddhhmmss");   //此处格式可以任意设置
+                SimpleDateFormat sDateFormat =  new  SimpleDateFormat("yyyyMMddhhmmss");   // This format can be customized
                 String  date =  sDateFormat.format(time  );
-                //创建文件
+                //Create file
                 Log.e("currentTimeMillis",date);
                 File file = new File(dir, date.trim()+".txt");
                 if (!file.exists()) {
                     file.createNewFile();
                 }
-                //写入日志文件
+                //Write to log file
                 fw = new FileWriter(file, true);
                 bw = new BufferedWriter(fw);
                 bw.write( msg + "\n");
@@ -75,11 +75,11 @@ public class LogUtil {
     }
 
 
-    // 数据文件夹
+    // Data directory
     private final String dataFile = "bleLog";
 
     /**
-     * 生成文件夹
+     * Create directory
      * */
     private static File makeDataFile() {
         File file = null;
@@ -96,13 +96,13 @@ public class LogUtil {
     }
 
     /**
-     * 获取dataFile文件夹下的所有文件
+     * Get all files under the dataFile directory
      * */
     public static ArrayList<logFile> getAllDataFileName(){
         try{
 
 
-        // 文件夹路径
+        // Directory path
         String collectionPath = makeDataFile().getPath();
 
         ArrayList<logFile> fileList = new ArrayList<>();
@@ -113,14 +113,14 @@ public class LogUtil {
         for (int i = 0; i < tempList.length; i++) {
             if (tempList[i].isFile()) {
                 System.out.println("文     件：" + tempList[i].getName());
-                // tempList[i].toString();// 路径
-                // tempList[i].getName();// 文件名
-                // 文件名
+                // tempList[i].toString();// Path
+                // tempList[i].getName();// File name
+                // File name
                 logFile logFile=new logFile();
                 String fileName = tempList[i].getName();
                 logFile.setName(fileName);
                 logFile.setPath(tempList[i].getPath());
-                    // 文件大小
+                    // File size
                     // String fileSize = FileSizeUtil.getAutoFileOrFilesSize(tempList[i].toString());
                     fileList.add(logFile);
             }

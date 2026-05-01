@@ -290,7 +290,7 @@ public class ConfigFragment extends Fragment implements View.OnClickListener {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                //刷新需执行的操作
+                //Operation to perform on refresh
 //                setble();
             }
         });
@@ -354,10 +354,10 @@ public class ConfigFragment extends Fragment implements View.OnClickListener {
         }
         BleDevice device = event.getBody();
         if (device.getName() != null) {
-//            txt2.setText("已成功连接（" + device.getName() + ")");
+//            txt2.setText("Connected successfully (" + device.getName() + ")");
 
         } else {
-//            txt2.setText("已成功连接（" + device.getMac() + ")");
+//            txt2.setText("Connected successfully (" + device.getMac() + ")");
         }
         isLink = true;
         auto = true;
@@ -433,7 +433,7 @@ public class ConfigFragment extends Fragment implements View.OnClickListener {
                 break;
 
             case R.id.title_left:
-                //重启
+                //Restart
                 new XPopup.Builder(getActivity()).asConfirm("", getResources().getString(R.string.restart), new OnConfirmListener() {
                     @Override
                     public void onConfirm() {
@@ -443,12 +443,12 @@ public class ConfigFragment extends Fragment implements View.OnClickListener {
 
                 break;
             case R.id.btn_right:
-                //切换
+                //Switch
                 isSwitch = !isSwitch;
                 switchrigth(isSwitch);
                 break;
             case R.id.btn_clear_log:
-                //重启
+                //Restart
                 new XPopup.Builder(getActivity()).asConfirm("", getResources().getString(R.string.isclearlog), new OnConfirmListener() {
                     @Override
                     public void onConfirm() {
@@ -466,55 +466,55 @@ public class ConfigFragment extends Fragment implements View.OnClickListener {
                 }).show();
                 break;
             case R.id.btn_suspend:
-                //重启
+                //Restart
                 pauseLog();
                 break;
             case R.id.btn_send_code:
-                //发送
+                //Send
                 sendCode();
                 break;
             case R.id.btn_send:
-                //发送
+                //Send
                 sendCode1();
                 break;
 
             case R.id.btn_send_hex:
-                //发送接收编码
+                //Send/receive encoding
 
                 selectPopup5.show();
                 break;
             case R.id.btn_selete:
-                //日志接收编码
+                //Log receive encoding
 
                 selectPopup4.show();
                 break;
 
             case R.id.txt_time1:
-                //重启
+                //Restart
                 setBtn();
                 v.setBackgroundResource(R.drawable.bg_black_on);
                 timeType = 5;
                 break;
             case R.id.txt_time2:
-                //重启
+                //Restart
                 setBtn();
                 v.setBackgroundResource(R.drawable.bg_black_on);
                 timeType = 10;
                 break;
             case R.id.txt_time3:
-                //重启
+                //Restart
                 setBtn();
                 v.setBackgroundResource(R.drawable.bg_black_on);
                 timeType = 20;
                 break;
             case R.id.txt_time4:
-                //重启
+                //Restart
                 setBtn();
                 v.setBackgroundResource(R.drawable.bg_black_on);
                 timeType = 40;
                 break;
             case R.id.btn_time:
-                //设置时间
+                //Set time
                 if (timeType == 0) {
                     if (editTextNumber.getText().toString().trim().length() == 0) {
                         Toast.makeText(getActivity(), getResources().getText(R.string.tdcTime) , Toast.LENGTH_SHORT).show();
@@ -645,7 +645,7 @@ public class ConfigFragment extends Fragment implements View.OnClickListener {
                 holder.txt_log = (TextView) convertView.findViewById(R.id.txt_log);
                 convertView.setTag(holder);
             }
-//            holder.txt_title.setText("数据:");
+//            holder.txt_title.setText("Data:");
             if (seleteHex) {
                 holder.txt_log.setText(TextUtils.strToASCII(logList.get(position)));
             } else {

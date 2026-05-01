@@ -139,18 +139,18 @@ public class MainActivity1 extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        // 将返回结果转给EasyPermissions
+        // Forward the result to EasyPermissions
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
     public void chechLocation() {
         String[] perms = {Manifest.permission.ACCESS_FINE_LOCATION};
         if (EasyPermissions.hasPermissions(this, perms)) {
-            // 已获取权限
+            // Permission already granted
             // ...
 
         } else {
-            // 没有权限，现在去获取
+            // Permission is missing; request it now
             // ...
             EasyPermissions.requestPermissions(this, getResources().getText(R.string.applyBlue  ).toString(),
                     1001, perms);
@@ -160,21 +160,21 @@ public class MainActivity1 extends AppCompatActivity {
 
 //    @Override
 //    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
-//        // 一些权限被授予
-//        Toast.makeText(this, "允许", Toast.LENGTH_SHORT).show();
+//        // Some permissions were granted
+//        Toast.makeText(this, "Allowed", Toast.LENGTH_SHORT).show();
 //    }
 //
 //    @Override
 //    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
-//        // 一些权限被禁止
-//        Toast.makeText(this, "禁止", Toast.LENGTH_SHORT).show();
+//        // Some permissions were denied
+//        Toast.makeText(this, "Denied", Toast.LENGTH_SHORT).show();
 //    }
 //
 //    @Override
 //    public void onPermissionsDenied(int requestCode, List<String> perms) {
 //        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
 //            new AppSettingsDialog.Builder(this).build().show();
-//            //弹出个对话框 可以自定义
+//            //Show a customizable dialog
 //        }
 //    }
 
@@ -214,14 +214,14 @@ public class MainActivity1 extends AppCompatActivity {
     }
 
     public void setble() {
-//               .setServiceUuids(serviceUuids)      // 只扫描指定的服务的设备，可选
-//                .setDeviceName(true, names)         // 只扫描指定广播名的设备，可选
-//                .setDeviceMac(mac)                  // 只扫描指定mac的设备，可选
-//                .setAutoConnect(isAutoConnect)      // 连接时的autoConnect参数，可选，默认false
+//               .setServiceUuids(serviceUuids)      // Only scan devices advertising the specified services; optional
+//                .setDeviceName(true, names)         // Only scan devices with the specified advertised name; optional
+//                .setDeviceMac(mac)                  // Only scan the specified MAC address; optional
+//                .setAutoConnect(isAutoConnect)      // autoConnect parameter for the connection; optional, defaults to false
         Log.e("setble", "setble");
         BleScanRuleConfig scanRuleConfig = new BleScanRuleConfig.Builder()
 
-                .setScanTimeOut(10000)              // 扫描超时时间，可选，默认10秒
+                .setScanTimeOut(10000)              // Scan timeout; optional, defaults to 10 seconds
                 .build();
         BleManager.getInstance().initScanRule(scanRuleConfig);
 
@@ -397,19 +397,19 @@ public class MainActivity1 extends AppCompatActivity {
                     new BleNotifyCallback() {
                         @Override
                         public void onNotifySuccess() {
-                            // 打开通知操作成功
+                            // Enabling notifications succeeded
                             Log.e("setble66633", "onNotifySuccess2");
                         }
 
                         @Override
                         public void onNotifyFailure(BleException exception) {
                             Log.e("setble666633", "onNotifyFailure2");
-                            // 打开通知操作失败
+                            // Enabling notifications failed
                         }
 
                         @Override
                         public void onCharacteristicChanged(byte[] data) {
-                            // 打开通知后，设备发过来的数据将在这里出现
+                            // Incoming device data appears here after notifications are enabled
                             Log.e("setble666332", HexUtil.formatHexString(data, true));
 
                             add("已接收" + HexUtil.formatHexString(data, true));
@@ -423,19 +423,19 @@ public class MainActivity1 extends AppCompatActivity {
                     new BleNotifyCallback() {
                         @Override
                         public void onNotifySuccess() {
-                            // 打开通知操作成功
+                            // Enabling notifications succeeded
                             Log.e("setble66633", "onNotifySuccess4");
                         }
 
                         @Override
                         public void onNotifyFailure(BleException exception) {
                             Log.e("setble666633", "onNotifyFailure4");
-                            // 打开通知操作失败
+                            // Enabling notifications failed
                         }
 
                         @Override
                         public void onCharacteristicChanged(byte[] data) {
-                            // 打开通知后，设备发过来的数据将在这里出现
+                            // Incoming device data appears here after notifications are enabled
                             Log.e("setble666334", HexUtil.formatHexString(data, true));
                         }
                     });
@@ -449,18 +449,18 @@ public class MainActivity1 extends AppCompatActivity {
                         @Override
                         public void onIndicateSuccess() {
                             Log.e("setble66333333", "onIndicateSuccess5");
-                            // 打开通知操作成功
+                            // Enabling notifications succeeded
                         }
 
                         @Override
                         public void onIndicateFailure(BleException exception) {
-                            // 打开通知操作失败
+                            // Enabling notifications failed
                             Log.e("setble66333333", "exception5");
                         }
 
                         @Override
                         public void onCharacteristicChanged(byte[] data) {
-                            // 打开通知后，设备发过来的数据将在这里出现
+                            // Incoming device data appears here after notifications are enabled
                             Log.e("setble663333335", HexUtil.formatHexString(data, true));
                         }
                     });
@@ -474,19 +474,19 @@ public class MainActivity1 extends AppCompatActivity {
                         new BleNotifyCallback() {
                             @Override
                             public void onNotifySuccess() {
-                                // 打开通知操作成功
+                                // Enabling notifications succeeded
                                 Log.e("setble66633", "onNotifySuccess8");
                             }
 
                             @Override
                             public void onNotifyFailure(BleException exception) {
                                 Log.e("setble666633", "onNotifyFailure8");
-                                // 打开通知操作失败
+                                // Enabling notifications failed
                             }
 
                             @Override
                             public void onCharacteristicChanged(byte[] data) {
-                                // 打开通知后，设备发过来的数据将在这里出现
+                                // Incoming device data appears here after notifications are enabled
                                 Log.e("setble666338", HexUtil.formatHexString(data, true));
                             }
                         });
@@ -512,7 +512,7 @@ public class MainActivity1 extends AppCompatActivity {
                 new BleWriteCallback() {
                     @Override
                     public void onWriteSuccess(int current, int total, byte[] justWrite) {
-                        // 发送数据到设备成功（分包发送的情况下，可以通过方法中返回的参数可以查看发送进度）
+                        // Data sent to the device successfully. For packetized sends, use the callback data to inspect progress.
                         Log.e("setblesend", HexUtil.formatHexString(justWrite, true));
                         add("已发送" + HexUtil.formatHexString(justWrite, true));
                     }
@@ -520,7 +520,7 @@ public class MainActivity1 extends AppCompatActivity {
                     @Override
                     public void onWriteFailure(BleException exception) {
                         Log.e("setbleononReadFailure", "onWriteFailure");
-                        // 发送数据到设备失败
+                        // Failed to send data to the device
                     }
                 });
 
@@ -541,7 +541,7 @@ public class MainActivity1 extends AppCompatActivity {
                 new BleWriteCallback() {
                     @Override
                     public void onWriteSuccess(int current, int total, byte[] justWrite) {
-                        // 发送数据到设备成功（分包发送的情况下，可以通过方法中返回的参数可以查看发送进度）
+                        // Data sent to the device successfully. For packetized sends, use the callback data to inspect progress.
                         Log.e("setblesend", HexUtil.formatHexString(justWrite, true));
 
                         add("已发送" + HexUtil.formatHexString(justWrite, true));
@@ -550,7 +550,7 @@ public class MainActivity1 extends AppCompatActivity {
                     @Override
                     public void onWriteFailure(BleException exception) {
                         Log.e("setbleononReadFailure", "onWriteFailure");
-                        // 发送数据到设备失败
+                        // Failed to send data to the device
                     }
                 });
 
@@ -572,7 +572,7 @@ public class MainActivity1 extends AppCompatActivity {
                 new BleWriteCallback() {
                     @Override
                     public void onWriteSuccess(int current, int total, byte[] justWrite) {
-                        // 发送数据到设备成功（分包发送的情况下，可以通过方法中返回的参数可以查看发送进度）
+                        // Data sent to the device successfully. For packetized sends, use the callback data to inspect progress.
                         Log.e("setblesend", HexUtil.formatHexString(justWrite, true));
                         add("已发送" + HexUtil.formatHexString(justWrite, true));
                     }
@@ -580,7 +580,7 @@ public class MainActivity1 extends AppCompatActivity {
                     @Override
                     public void onWriteFailure(BleException exception) {
                         Log.e("setbleononReadFailure", "onWriteFailure");
-                        // 发送数据到设备失败
+                        // Failed to send data to the device
                     }
                 });
 
@@ -608,7 +608,7 @@ public class MainActivity1 extends AppCompatActivity {
                 new BleWriteCallback() {
                     @Override
                     public void onWriteSuccess(int current, int total, byte[] justWrite) {
-                        // 发送数据到设备成功（分包发送的情况下，可以通过方法中返回的参数可以查看发送进度）
+                        // Data sent to the device successfully. For packetized sends, use the callback data to inspect progress.
                         Log.e("setblesend", HexUtil.formatHexString(justWrite, true));
                         add("已发送" + HexUtil.formatHexString(justWrite, true));
                     }
@@ -616,7 +616,7 @@ public class MainActivity1 extends AppCompatActivity {
                     @Override
                     public void onWriteFailure(BleException exception) {
                         Log.e("setbleononReadFailure", "onWriteFailure");
-                        // 发送数据到设备失败
+                        // Failed to send data to the device
                     }
                 });
 
@@ -636,7 +636,7 @@ public class MainActivity1 extends AppCompatActivity {
                 new BleWriteCallback() {
                     @Override
                     public void onWriteSuccess(int current, int total, byte[] justWrite) {
-                        // 发送数据到设备成功（分包发送的情况下，可以通过方法中返回的参数可以查看发送进度）
+                        // Data sent to the device successfully. For packetized sends, use the callback data to inspect progress.
                         Log.e("setblesend", HexUtil.formatHexString(justWrite, true));
                         add("已发送" + HexUtil.formatHexString(justWrite, true));
                     }
@@ -644,7 +644,7 @@ public class MainActivity1 extends AppCompatActivity {
                     @Override
                     public void onWriteFailure(BleException exception) {
                         Log.e("setbleononReadFailure", "onWriteFailure");
-                        // 发送数据到设备失败
+                        // Failed to send data to the device
                     }
                 });
 
@@ -660,13 +660,13 @@ public class MainActivity1 extends AppCompatActivity {
                     new BleReadCallback() {
                         @Override
                         public void onReadSuccess(byte[] data) {
-                            // 读特征值数据成功
+                            // Characteristic read succeeded
                             Log.e("setbleonReadSuccess", HexUtil.formatHexString(data, true));
                         }
 
                         @Override
                         public void onReadFailure(BleException exception) {
-                            // 读特征值数据失败
+                            // Characteristic read failed
                             Log.e("setbleononReadFailure", "455454");
                         }
                     });

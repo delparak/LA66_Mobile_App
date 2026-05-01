@@ -113,7 +113,7 @@ public class HomeFragment extends Fragment {
     private MallPagerAdapter mallItemAdapter;
 
     public void swtBanner() {
-        //以下是设置轮播图
+        //Set up the carousel below
         bannerList = new ArrayList<>();
         bannerList.add(R.mipmap.laq4);
         bannerList.add(R.mipmap.lbt1);
@@ -136,13 +136,13 @@ public class HomeFragment extends Fragment {
         bannerList.add(R.mipmap.lwl02);
         bannerList.add(R.mipmap.rs485_ln);
         ultraViewPager.setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL);
-        //UltraPagerAdapter 绑定子view到UltraViewPager
+        //UltraPagerAdapter Bind child views to UltraViewPager
         mallItemAdapter = new MallPagerAdapter(bannerList, getActivity());
 /*
         ((MallPagerAdapter) adapter).setOnBannerClickListener(new MallPagerAdapter.OnBannerClickListener() {
             @Override
             public void onClick(int position) {
-                //类型(1商品跳转 2外部链接 3其它)
+                //Type (1 product link, 2 external link, 3 other)
                 if (bannerList.get(position).getBannerType().equals("1")) {
                     getGoodsById(bannerList.get(position).getBannerUrl());
                 } else if (bannerList.get(position).getBannerType().equals("2")) {
@@ -158,23 +158,23 @@ public class HomeFragment extends Fragment {
         });
 */
         ultraViewPager.setAdapter(mallItemAdapter);
-        //内置indicator初始化
+        //Initialize the built-in indicator
         ultraViewPager.initIndicator();
-        //设置indicator样式
+        //Set the indicator style
         ultraViewPager.getIndicator()
                 .setOrientation(UltraViewPager.Orientation.HORIZONTAL)
                 .setFocusResId(R.mipmap.img_yuandian1)
                 .setNormalResId(R.mipmap.img_yuandian2)
                 .setRadius((int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics()));
-        //设置indicator对齐方式
+        //Set the indicator alignment
         ultraViewPager.getIndicator().setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM);
         ultraViewPager.getIndicator().setMargin(0,0,0,30);
-        //构造indicator,绑定到UltraViewPager
+        //Build the indicator and bind it to UltraViewPager
         ultraViewPager.getIndicator().build();
 
-        //设定页面循环播放
+        //Enable cyclic page playback
         ultraViewPager.setInfiniteLoop(true);
-        //设定页面自动切换  间隔1秒
+        // Enable automatic page switching with a 1-second interval
         ultraViewPager.setAutoScroll(2000);
     }
 
