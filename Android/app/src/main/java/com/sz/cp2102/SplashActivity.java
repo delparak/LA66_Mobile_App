@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ScrollView;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,7 +33,8 @@ public class SplashActivity extends Activity {
         }
 
         final EditText inputShellMessage = findViewById(R.id.input_shell_message);
-        final TextView txtShellOutput = findViewById(R.id.txt_shell_output);
+        final TextView txtShellSentHistory = findViewById(R.id.txt_shell_sent_history);
+        final ScrollView panelShellSentHistory = findViewById(R.id.panel_shell_sent_history);
 
         findViewById(R.id.btn_shell_send).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +57,7 @@ public class SplashActivity extends Activity {
 
                 String hexPayload = bytesToHex(payloadBytes);
                 String command = SEND_PREFIX + payloadBytes.length + "," + hexPayload;
-                appendOutput(txtShellOutput, "TX: " + command);
+                appendOutput(txtShellSentHistory, "TX: " + command, panelShellSentHistory);
                 inputShellMessage.setText("");
             }
         });
@@ -69,13 +71,19 @@ public class SplashActivity extends Activity {
         });
     }
 
-    private void appendOutput(TextView outputView, String line) {
+    private void appendOutput(TextView outputView, String line, ScrollView container) {
         CharSequence current = outputView.getText();
         if (current == null || current.length() == 0) {
             outputView.setText(line);
-            return;
+        } else {
+            outputView.append("\n" + line);
         }
-        outputView.append("\n" + line);
+        container.post(new Runnable() {
+            @Override
+            public void run() {
+                container.fullScroll(View.FOCUS_DOWN);
+            }
+        });
     }
 
     private boolean isPrintableAscii(String value) {

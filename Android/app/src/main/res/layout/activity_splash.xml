@@ -43,23 +43,37 @@
         <LinearLayout
             android:id="@+id/panel_shell_send"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="200dp"
             android:layout_marginTop="8dp"
             android:background="@android:color/white"
             android:orientation="vertical"
             android:padding="8dp">
 
-            <EditText
-                android:id="@+id/input_shell_message"
+            <ScrollView
+                android:id="@+id/panel_shell_sent_history"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:background="@android:color/transparent">
+
+                <TextView
+                    android:id="@+id/txt_shell_sent_history"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@android:color/black"
+                    android:textSize="14sp" />
+            </ScrollView>
+
+            <EditText
+                android:id="@+id/input_shell_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:gravity="top|start"
                 android:hint="@string/shell_message_hint"
-                android:inputType="textMultiLine|textNoSuggestions"
-                android:maxLines="6"
-                android:padding="0dp"
+                android:inputType="text|textNoSuggestions"
+                android:maxLines="1"
+                android:paddingTop="6dp"
                 android:textColor="@android:color/black"
                 android:textSize="16sp" />
 
