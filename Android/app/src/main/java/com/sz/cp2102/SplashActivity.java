@@ -57,8 +57,17 @@ public class SplashActivity extends Activity {
 
                 String hexPayload = bytesToHex(payloadBytes);
                 String command = SEND_PREFIX + payloadBytes.length + "," + hexPayload;
+<<<<<<< codex/review-repository-functionality-2q5m8m
+                if (sendCommand(command)) {
+                    appendOutput(txtShellSentHistory, "TX: " + command, panelShellSentHistory);
+                    inputShellMessage.setText("");
+                } else {
+                    showToast(getString(R.string.shell_error_not_connected));
+                }
+=======
                 appendOutput(txtShellSentHistory, "TX: " + command, panelShellSentHistory);
                 inputShellMessage.setText("");
+>>>>>>> main
             }
         });
 
@@ -95,6 +104,7 @@ public class SplashActivity extends Activity {
         }
         return true;
     }
+<<<<<<< codex/review-repository-functionality-2q5m8m
 
     private String bytesToHex(byte[] bytes) {
         StringBuilder builder = new StringBuilder(bytes.length * 2);
@@ -106,5 +116,31 @@ public class SplashActivity extends Activity {
 
     private void showToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean sendCommand(String command) {
+        if (MyApplication.port == null) {
+            return false;
+        }
+        try {
+            String hexCommand = TextUtils.strToASCII(command) + "0D0A";
+            MyApplication.port.write(HexUtil.hexStringToBytes(hexCommand), 3000);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+=======
+
+    private String bytesToHex(byte[] bytes) {
+        StringBuilder builder = new StringBuilder(bytes.length * 2);
+        for (byte data : bytes) {
+            builder.append(String.format("%02X", data));
+        }
+        return builder.toString();
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+>>>>>>> main
     }
 }
