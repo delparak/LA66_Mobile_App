@@ -7,7 +7,7 @@
     <string name="shell_error_ascii">Only English ASCII characters are allowed</string>
     <string name="shell_error_max_bytes">Maximum payload is %1$d bytes</string>
     <string name="shell_error_not_connected">Device is not connected</string>
->>>>>>> main
+
     <string name="home">Home</string>
     <string name="Device_Info">Device Info</string>
     <string name="Config">Config</string>
