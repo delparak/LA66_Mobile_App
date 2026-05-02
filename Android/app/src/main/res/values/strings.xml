@@ -7,7 +7,6 @@
     <string name="shell_error_ascii">Only English ASCII characters are allowed</string>
     <string name="shell_error_max_bytes">Maximum payload is %1$d bytes</string>
     <string name="shell_error_not_connected">Device is not connected</string>
->>>>>>> main
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -17,8 +16,6 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-
-
 
     <string name="home">主页</string>
     <string name="Device_Info">Device Info</string>
@@ -99,8 +96,6 @@
     <string name="at11">设置发射功率</string>
     <string name="at12">打印所有AT指令</string>
     <string name="input_at">Please enter at command</string>
-<!--    <string name="input_at">Please enter an AT command</string>-->
-
     <string name="txt_password">请输入密码</string>
     <string name="placePassword">请输入密码</string>
     <string name="placeBle">请连接蓝牙设备</string>
