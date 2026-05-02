@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import androidx.annotation.Nullable;
 
 import java.nio.charset.StandardCharsets;
@@ -64,7 +63,7 @@ public class SplashActivity extends Activity {
                 } else {
                     showToast(getString(R.string.shell_error_not_connected));
                 }
->>>>>>> main
+
             }
         });
 
@@ -126,29 +125,5 @@ public class SplashActivity extends Activity {
             return false;
         }
 
-    private String bytesToHex(byte[] bytes) {
-        StringBuilder builder = new StringBuilder(bytes.length * 2);
-        for (byte data : bytes) {
-            builder.append(String.format("%02X", data));
-        }
-        return builder.toString();
-    }
-
-    private void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-
-    private boolean sendCommand(String command) {
-        if (MyApplication.port == null) {
-            return false;
-        }
-        try {
-            String hexCommand = TextUtils.strToASCII(command) + "0D0A";
-            MyApplication.port.write(HexUtil.hexStringToBytes(hexCommand), 3000);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
->>>>>>> main
     }
 }
