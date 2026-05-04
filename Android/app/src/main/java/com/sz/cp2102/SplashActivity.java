@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.ScrollView;
 import android.widget.EditText;
@@ -29,6 +30,7 @@ public class SplashActivity extends Activity {
 
     private static final int MAX_PAYLOAD_BYTES = 16;
     private static final String SEND_PREFIX = "AT+SENDB=01,02,";
+    private String selectedShellId = "";
 
     private void sendGeneratedAtCommand(String command) {
         try {
@@ -66,8 +68,26 @@ public class SplashActivity extends Activity {
         }
 
         final EditText inputShellMessage = findViewById(R.id.input_shell_message);
+        final EditText inputDestinationId = findViewById(R.id.input_destination_id);
+        final EditText inputSourceId = findViewById(R.id.input_source_id);
         final TextView txtShellSentHistory = findViewById(R.id.txt_shell_sent_history);
         final ScrollView panelShellSentHistory = findViewById(R.id.panel_shell_sent_history);
+        inputDestinationId.setFilters(new InputFilter[]{new InputFilter.LengthFilter(2)});
+        inputSourceId.setFilters(new InputFilter[]{new InputFilter.LengthFilter(2)});
+
+        findViewById(R.id.btn_shell_set_id).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String destinationId = inputDestinationId.getText().toString().trim();
+                String sourceId = inputSourceId.getText().toString().trim();
+                if (!destinationId.matches("\\d{2}") || !sourceId.matches("\\d{2}")) {
+                    showToast("Each ID part must be exactly 2 digits");
+                    return;
+                }
+                selectedShellId = destinationId + sourceId;
+                showToast("ID set: " + selectedShellId);
+            }
+        });
 
         findViewById(R.id.btn_shell_send).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,9 +100,8 @@ public class SplashActivity extends Activity {
                     return;
                 }
 
-                // Check if the first 4 characters are digits
-                if (!hasValidAddressPrefix(input)) {
-                    showToast(getString(R.string.shell_error_prefix_digits));
+                if (selectedShellId.length() != 4) {
+                    showToast("Please set a 4-digit ID first");
                     return;
                 }
 
@@ -120,20 +139,6 @@ public class SplashActivity extends Activity {
                 startActivity(intent);
             }
         });
-    }
-
-    // Function to check if the first 4 characters are digits
-    private boolean hasValidAddressPrefix(String value) {
-        if (value.length() < 4) {
-            return false;
-        }
-        // Check if the first 4 characters are digits
-        for (int i = 0; i < 4; i++) {
-            if (!Character.isDigit(value.charAt(i))) {
-                return false;
-            }
-        }
-        return true;
     }
 
     // Function to append output to the screen
