@@ -13,9 +13,6 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 
 import com.sz.cp2102.MyApplication;
@@ -108,23 +105,27 @@ public class SplashActivity extends Activity {
                     return;
                 }
 
-                byte[] payloadBytes = input.getBytes(StandardCharsets.US_ASCII);
+                // Separate the first 4 digits (ID) and the remaining message
+                String idPart = input.substring(0, 4);  // First 4 digits (ID)
+                String messagePart = input.substring(4); // The rest of the message
 
-                // Check if the input exceeds the max allowed bytes
-                if (payloadBytes.length > MAX_PAYLOAD_BYTES) {
-                    showToast(getString(R.string.shell_error_max_bytes, MAX_PAYLOAD_BYTES));
-                    return;
-                }
+                // Calculate the total length of the message (ID + message)
+                int payloadLength = idPart.length() + messagePart.length();  // Total length = 4 + message length
 
+                // Convert the remaining message to hex
+                byte[] payloadBytes = messagePart.getBytes(StandardCharsets.US_ASCII);
                 String hexPayload = bytesToHex(payloadBytes);
-                String command = SEND_PREFIX + payloadBytes.length + "," + hexPayload;
+
+                // Construct the final command
+                String command = SEND_PREFIX + "4," + idPart + hexPayload;
 
                 // Display the command in the history view
                 appendOutput(txtShellSentHistory, "TX: " + command, panelShellSentHistory);
 
-                // Send real AT command to LA66
+                // Send the real AT command to LA66
                 sendGeneratedAtCommand(command);
 
+                // Clear the input field
                 inputShellMessage.setText("");
             }
         });
