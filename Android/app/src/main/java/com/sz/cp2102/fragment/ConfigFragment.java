@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
@@ -83,8 +84,10 @@ public class ConfigFragment extends Fragment implements View.OnClickListener {
     private TextView txt_time4;
     private EditText editTextNumber;
     private EditText editTextTextPersonName;
+    private EditText editTextDeviceId;
     private TextView btn_selete;
     private TextView btn_send_hex;
+    private String selectedDeviceId = "";
 
     private TextView txt_atdetails;
     private EditText edittext1;
@@ -140,6 +143,8 @@ public class ConfigFragment extends Fragment implements View.OnClickListener {
         btn_send_hex = view.findViewById(R.id.btn_send_hex);
         btn_suspend = view.findViewById(R.id.btn_suspend);
         editTextTextPersonName = view.findViewById(R.id.editTextTextPersonName);
+        editTextDeviceId = view.findViewById(R.id.editTextDeviceId);
+        editTextDeviceId.setFilters(new InputFilter[]{new InputFilter.LengthFilter(4)});
         editTextNumber = view.findViewById(R.id.editTextNumber);
         editTextNumber.addTextChangedListener(new TextWatcher() {
             @Override
@@ -261,6 +266,7 @@ public class ConfigFragment extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.btn_save).setOnClickListener(this);
         view.findViewById(R.id.btn_send_hex).setOnClickListener(this);
         view.findViewById(R.id.btn_send_code).setOnClickListener(this);
+        view.findViewById(R.id.btn_set_id).setOnClickListener(this);
         view.findViewById(R.id.btn_clear_log).setOnClickListener(this);
         view.findViewById(R.id.btn_time).setOnClickListener(this);
         view.findViewById(R.id.btn_selete).setOnClickListener(this);
@@ -408,6 +414,10 @@ public class ConfigFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        if (v.getId() == R.id.btn_set_id) {
+            setDeviceId();
+            return;
+        }
         if (!isLink) {
             Toast.makeText(getActivity(), getResources().getText(R.string.isConnect), Toast.LENGTH_SHORT).show();
             return;
@@ -587,6 +597,20 @@ public class ConfigFragment extends Fragment implements View.OnClickListener {
                 send(editTextTextPersonName.getText().toString().trim());
             }
         }
+    }
+
+    private void setDeviceId() {
+        String inputId = editTextDeviceId.getText().toString().trim();
+        if (!inputId.matches("\\d{4}")) {
+            Toast.makeText(getActivity(), "ID must be exactly 4 digits", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        selectedDeviceId = inputId;
+        onDeviceIdSet(selectedDeviceId);
+    }
+
+    private void onDeviceIdSet(String deviceId) {
+        Toast.makeText(getActivity(), "ID set: " + deviceId, Toast.LENGTH_SHORT).show();
     }
 
     private class LogAdapter extends BaseAdapter {
