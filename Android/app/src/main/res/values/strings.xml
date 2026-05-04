@@ -8,6 +8,8 @@
     <string name="shell_error_empty">Please enter a message</string>
     <string name="shell_error_ascii">Only English ASCII characters are allowed</string>
     <string name="shell_error_max_bytes">Maximum payload is %1$d bytes</string>
+    <string name="shell_error_prefix_digits">The first 4 characters must be digits.</string>
+
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
