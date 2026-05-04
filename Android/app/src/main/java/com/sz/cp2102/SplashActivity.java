@@ -29,8 +29,9 @@ import com.sz.cp2102.utils.TextUtils;
 public class SplashActivity extends Activity {
 
     private static final int MAX_PAYLOAD_BYTES = 16;
-    private static final String SEND_PREFIX = "AT+SENDB=01,02,";
     private String selectedShellId = "";
+    private String selectedDestinationId = "";
+    private String selectedSourceId = "";
 
     private void sendGeneratedAtCommand(String command) {
         try {
@@ -84,6 +85,8 @@ public class SplashActivity extends Activity {
                     showToast("Each ID part must be exactly 2 digits");
                     return;
                 }
+                selectedDestinationId = destinationId;
+                selectedSourceId = sourceId;
                 selectedShellId = destinationId + sourceId;
                 showToast("ID set: " + selectedShellId);
             }
@@ -120,7 +123,7 @@ public class SplashActivity extends Activity {
                 }
 
                 String hexPayload = bytesToHex(payloadBytes);
-                String command = SEND_PREFIX + payloadBytes.length + "," + hexPayload;
+                String command = "AT+SENDB=" + selectedDestinationId + "," + selectedSourceId + "," + payloadBytes.length + "," + hexPayload;
 
                 // Display the command in the history view
                 appendOutput(txtShellSentHistory, "TX: " + command, panelShellSentHistory);
