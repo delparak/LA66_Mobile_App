@@ -26,19 +26,40 @@
         android:layout_marginTop="116dp"
         android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/input_shell_id"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="36dp"
-            android:background="@android:color/white"
-            android:hint="@string/shell_id_hint"
-            android:inputType="text"
-            android:paddingStart="8dp"
-            android:paddingEnd="8dp"
-            android:singleLine="true"
-            android:textColor="@android:color/black"
-            android:textColorHint="#A8A8A8"
-            android:textSize="16sp" />
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/input_shell_id"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:hint="@string/shell_id_hint"
+                android:inputType="number"
+                android:maxLength="4"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:singleLine="true"
+                android:textColor="@android:color/black"
+                android:textColorHint="#A8A8A8"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/btn_shell_set_id"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:background="#D7FF2A"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:text="set"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/panel_shell_send"
