@@ -16,6 +16,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.Looper;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
@@ -234,6 +235,14 @@ public class MainActivity extends Activity implements SerialInputOutputManager.L
             }
         });
         editTextTextPersonName = findViewById(R.id.editTextTextPersonName);
+        editTextDeviceId = findViewById(R.id.editTextDeviceId);
+        editTextDeviceId.setFilters(new InputFilter[]{new InputFilter.LengthFilter(4)});
+        findViewById(R.id.btn_set_id).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setDeviceId();
+            }
+        });
         btn_send_hex = findViewById(R.id.btn_send_hex);
         btn_send_hex.setText(getResources().getString(R.string.text_code_send) + "(" + getResources().getString(R.string.ascii) + ")");
         selectPopup5 = new XPopup.Builder(this)
@@ -363,6 +372,24 @@ public class MainActivity extends Activity implements SerialInputOutputManager.L
         }
     }
 
+    private void setDeviceId() {
+        String inputId = editTextDeviceId.getText().toString().trim();
+        if (inputId.length() != 4) {
+            showText("ID must be exactly 4 digits");
+            return;
+        }
+        if (!inputId.matches("\\d{4}")) {
+            showText("ID must contain numbers only");
+            return;
+        }
+        selectedDeviceId = inputId;
+        onDeviceIdSet(selectedDeviceId);
+    }
+
+    private void onDeviceIdSet(String deviceId) {
+        showText("ID set: " + deviceId);
+    }
+
     private long sendtime = 0;
     private Boolean isSendData = false;
 
@@ -424,11 +451,13 @@ public class MainActivity extends Activity implements SerialInputOutputManager.L
     }
 
     private EditText editTextTextPersonName;
+    private EditText editTextDeviceId;
     private TextView btn_send_hex;
     private TextView btn_location;
     private int locationTime = 60;
     private Boolean sendHex = false;
     private BasePopupView selectPopup5;
+    private String selectedDeviceId = "";
     public UsbManager mUsbManager;
     public UsbDevice UsbDevice;
     public Boolean isConnect = false;
