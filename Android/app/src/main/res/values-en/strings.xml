@@ -3,7 +3,7 @@
     <string name="open_legacy_ui">Open legacy UI</string>
     <string name="shell_id_hint">id</string>
     <string name="shell_send">send</string>
-    <string name="shell_message_hint">Type an ASCII message</string>
+    <string name="shell_message_hint">Type your message here...</string>
     <string name="shell_output_hint">Received messages will appear here</string>
     <string name="shell_error_empty">Please enter a message</string>
     <string name="shell_error_ascii">Only English ASCII characters are allowed</string>

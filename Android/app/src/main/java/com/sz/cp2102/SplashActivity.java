@@ -28,6 +28,8 @@ public class SplashActivity extends Activity {
     private static final int MAX_PAYLOAD_BYTES = 16;
     private static final String SEND_PREFIX = "AT+SENDB=01,02,";
     private String selectedShellId = "";  // To store the 4-digit ID
+    private String selectedDestinationId = "";
+    private String selectedSourceId = "";
 
     private void sendGeneratedAtCommand(String command) {
         try {
@@ -65,10 +67,32 @@ public class SplashActivity extends Activity {
         }
 
         final EditText inputShellMessage = findViewById(R.id.input_shell_message);
-        final EditText inputShellId = findViewById(R.id.input_shell_id);
+        /*final EditText inputShellId = findViewById(R.id.input_shell_id);*/
+        final EditText inputDestinationId = findViewById(R.id.input_destination_id);
+        final EditText inputSourceId = findViewById(R.id.input_source_id);
         final TextView txtShellSentHistory = findViewById(R.id.txt_shell_sent_history);
         final ScrollView panelShellSentHistory = findViewById(R.id.panel_shell_sent_history);
-        inputShellId.setFilters(new InputFilter[]{new InputFilter.LengthFilter(4)});
+
+        inputDestinationId.setFilters(new InputFilter[]{new InputFilter.LengthFilter(2)});
+        inputSourceId.setFilters(new InputFilter[]{new InputFilter.LengthFilter(2)});
+
+        findViewById(R.id.btn_shell_set_id).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String destinationId = inputDestinationId.getText().toString().trim();
+                String sourceId = inputSourceId.getText().toString().trim();
+                if (!destinationId.matches("\\d{2}") || !sourceId.matches("\\d{2}")) {
+                    showToast("Each ID part must be exactly 2 digits");
+                    return;
+                }
+                selectedDestinationId = destinationId;
+                selectedSourceId = sourceId;
+                selectedShellId = destinationId + sourceId;
+                showToast("ID set: " + selectedShellId);
+            }
+        });
+
+        /*inputShellId.setFilters(new InputFilter[]{new InputFilter.LengthFilter(4)});
 
         // Set ID on button click
         findViewById(R.id.btn_shell_set_id).setOnClickListener(new View.OnClickListener() {
@@ -82,7 +106,7 @@ public class SplashActivity extends Activity {
                 selectedShellId = idValue;  // Store ID entered by user
                 showToast("ID set: " + selectedShellId);
             }
-        });
+        });*/
 
         // Send message on button click
         findViewById(R.id.btn_shell_send).setOnClickListener(new View.OnClickListener() {
@@ -120,10 +144,12 @@ public class SplashActivity extends Activity {
                 int payloadLength = 2 + payloadBytes.length; // 2 bytes for ID + message length in hex
 
                 // Construct the final command
-                String command = SEND_PREFIX + payloadLength + "," + idPart + hexPayload;
+                /* String command = SEND_PREFIX + payloadLength + "," + idPart + hexPayload;*/
+                String command = SEND_PREFIX + payloadLength + "," + selectedDestinationId + selectedSourceId + hexPayload;
 
                 // Display the command in the history view
                 appendOutput(txtShellSentHistory, command, panelShellSentHistory);
+                appendOutput(txtShellSentHistory, "send to " + selectedDestinationId + ": " + messagePart, panelShellSentHistory);
 
                 // Send the real AT command to LA66
                 sendGeneratedAtCommand(command);
