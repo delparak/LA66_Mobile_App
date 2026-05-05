@@ -27,7 +27,7 @@ public class SplashActivity extends Activity {
 
     private static final int MAX_PAYLOAD_BYTES = 16;
     private static final String SEND_PREFIX = "AT+SENDB=01,02,";
-    private String selectedShellId = "";
+    private String selectedShellId = "";  // To store the 4-digit ID
 
     private void sendGeneratedAtCommand(String command) {
         try {
@@ -70,6 +70,7 @@ public class SplashActivity extends Activity {
         final ScrollView panelShellSentHistory = findViewById(R.id.panel_shell_sent_history);
         inputShellId.setFilters(new InputFilter[]{new InputFilter.LengthFilter(4)});
 
+        // Set ID on button click
         findViewById(R.id.btn_shell_set_id).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,11 +79,12 @@ public class SplashActivity extends Activity {
                     showToast("ID must be exactly 4 digits");
                     return;
                 }
-                selectedShellId = idValue;
+                selectedShellId = idValue;  // Store ID entered by user
                 showToast("ID set: " + selectedShellId);
             }
         });
 
+        // Send message on button click
         findViewById(R.id.btn_shell_send).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,6 +96,7 @@ public class SplashActivity extends Activity {
                     return;
                 }
 
+                // Check if ID is set
                 if (selectedShellId.length() != 4) {
                     showToast("Please set a 4-digit ID first");
                     return;
@@ -106,21 +109,21 @@ public class SplashActivity extends Activity {
                 }
 
                 // Separate the first 4 digits (ID) and the remaining message
-                String idPart = input.substring(0, 4);  // First 4 digits (ID)
-                String messagePart = input.substring(4); // The rest of the message
-
-                // Calculate the total length of the message (ID + message)
-                int payloadLength = idPart.length() + messagePart.length();  // Total length = 4 + message length
+                String idPart = selectedShellId;  // Use the selected 4-digit ID
+                String messagePart = input; // Message
 
                 // Convert the remaining message to hex
                 byte[] payloadBytes = messagePart.getBytes(StandardCharsets.US_ASCII);
                 String hexPayload = bytesToHex(payloadBytes);
 
+                // Calculate the total length of the message (ID + message)
+                int payloadLength = 2 + payloadBytes.length; // 2 bytes for ID + message length in hex
+
                 // Construct the final command
-                String command = SEND_PREFIX + "4," + idPart + hexPayload;
+                String command = SEND_PREFIX + payloadLength + "," + idPart + hexPayload;
 
                 // Display the command in the history view
-                appendOutput(txtShellSentHistory, "TX: " + command, panelShellSentHistory);
+                appendOutput(txtShellSentHistory, command, panelShellSentHistory);
 
                 // Send the real AT command to LA66
                 sendGeneratedAtCommand(command);
@@ -130,6 +133,7 @@ public class SplashActivity extends Activity {
             }
         });
 
+        // Open legacy UI
         findViewById(R.id.btn_open_legacy_ui).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
